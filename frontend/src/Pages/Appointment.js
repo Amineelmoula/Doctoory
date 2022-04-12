@@ -1,23 +1,18 @@
-import React, { useEffect } from 'react';
-import '../App.css';
-import AppointmentSection from '../Components/Appointment/AppointmentSection';
-import AppointmentTable from '../Components/Appointment/AppointmentTable';
-import Footer from '../Components/Footer/Footer';
-import Header from '../Components/Header/Header';
-
+import Footer from "../components/Footer/Footer";
+import Header from "../components/Header/Header";
+import React from "react";
+import AppointmentData from "../components/AppointmentData/AppointmentData";
+import Banner from "../components/Banner/Banner";
+// import FeaturedService from "../components/FeaturedService/FeaturedService";
 const Appointment = () => {
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
-
-	return (
-		<div className="heder-content">
-			<Header />	
-			<AppointmentSection />
-            <AppointmentTable/>
-            <Footer />
-		</div>
-	);
+  return (
+    <div className="heder-content">
+      <Header />
+      <Banner />
+      <AppointmentData />
+      {/* <Footer /> */}
+    </div>
+  );
 };
 
 export default Appointment;
