@@ -1,28 +1,30 @@
-const mongoose = require("mongoose");
-const { RequestState } = require("../helpers/constants");
+const mongoose = require('mongoose');
+const { RequestState } = require('../helpers/constants');
 
 const AppointmentSchema = new mongoose.Schema({
 	date: { type: Date, required: true },
 	description: { type: String, required: false },
 	target: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "user",
+		ref: 'User',
 	},
-	requester: { type: String, required: true, unique: true },
-	state: {
+	requester: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+	},
+	status: {
 		type: Number,
 		enum: Object.values(RequestState),
 		default: RequestState.Pending,
 	},
 });
 
-AppointmentSchema.pre("find", function (next) {
-	this.populate("target").populate("requester");
+AppointmentSchema.pre('find', function (next) {
+	this.populate('requester').populate({
+		path: 'target',
+		populate: 'details',
+	});
 	next();
 });
 
-AppointmentSchema.pre("findOne", function (next) {
-	this.populate("target").populate("requester");
-	next();
-});
-module.exports = mongoose.model("appointment", AppointmentSchema);
+module.exports = mongoose.model('Appointment', AppointmentSchema);

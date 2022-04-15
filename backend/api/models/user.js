@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
-const { Role } = require("../helpers/constants");
-const CategoriesEnum = require("./category");
-
+const mongoose = require('mongoose');
+const { Role } = require('../helpers/constants');
+const DoctorDetails = require('./doctorDetails');
 const UserSchema = new mongoose.Schema({
-	firstName: { type: String, require: true },
-	lastName: { type: String, require: true },
+	firstName: { type: String, required: true },
+	lastName: { type: String, required: true },
 	email: {
 		type: String,
 		required: true,
@@ -20,14 +19,17 @@ const UserSchema = new mongoose.Schema({
 		enum: [Role.DOCTOR, Role.PATIENT],
 		default: Role.PATIENT,
 	},
-	categories: [{ type: String, refs: CategoriesEnum }],
+	details: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'DoctorDetail',
+	},
 });
 
-UserSchema.pre("find", function (next) {
-	if (this.role == Role.DOCTOR) {
-		this.populate("categories", "-password");
+UserSchema.pre('find', function (next) {
+	if (this.getQuery()?.role === Role.DOCTOR) {
+		this.populate('details');
 	}
 	next();
 });
 
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

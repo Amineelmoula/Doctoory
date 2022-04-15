@@ -1,16 +1,16 @@
 .doctorList {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+  margin: 50px;
 }
 
 .single-doctor {
-    margin: 50px;
+    margin: 100px;
+    width: 50%
 }
 
 h3 {
-    margin: 30px;
+    margin: 90px
 }
 
 .doctor-name {
@@ -21,13 +21,6 @@ h3 {
     margin: 50px;
 }
 
-.movieCard {
-    background-color: black;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 2%;
-}
 
 .cardText {
     background-color: white;
@@ -36,12 +29,7 @@ h3 {
     align-items: center;
 }
 
-.movieTitle {
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    color: white;
-}
+
 .appointment-card {
     border: none;
     box-shadow: 0 0 10px #f3f0f0b0;

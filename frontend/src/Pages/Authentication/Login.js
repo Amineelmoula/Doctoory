@@ -24,6 +24,7 @@ const Login = () => {
       await login({ email: email.value, password: password.value });
       navigate(from, { replace: true });
     } catch (error) {
+      if (error) alert(error?.response?.data?.error);
       console.log(error?.response?.data?.error);
     }
   };

@@ -1,26 +1,26 @@
-const { Role } = require("../helpers/constants");
-const { body, validationResult } = require("express-validator");
-const { ErrorResponse } = require("../utils/errorResponse");
+const { Role } = require('../helpers/constants');
+const { body, validationResult } = require('express-validator');
+const { BadRequest } = require('../utils/errorResponse');
 
 const signUpValidation = [
-	body("email", "not a valid email").isEmail(),
-	body("password", "password should exceed 5 characters").isLength({
+	body('email', 'not a valid email').isEmail(),
+	body('password', 'password should exceed 5 characters').isLength({
 		min: 6,
 	}),
-	body("firstName", "firstName should exceed 5 characters").isLength({
+	body('firstName', 'firstName should exceed 5 characters').isLength({
 		min: 3,
 	}),
-	body("lastName", "lastname kslqdfnmsqf").isLength({
+	body('lastName', 'lastname kslqdfnmsqf').isLength({
 		min: 4,
 	}),
-	body("role", "incorrect role").custom((value) =>
+	body('role', 'incorrect role').custom((value) =>
 		Object.values(Role).includes(value)
 	),
 ];
 const signInValidation = [
-	body("email", "not a valid email").isEmail(),
-	body("password", "password should exceed 5 characters").isLength({
-		min: 6,
+	body('email', 'not a valid email').isEmail(),
+	body('password', 'password should exceed 5 characters').isLength({
+		min: 0,
 	}),
 ];
 
@@ -28,7 +28,7 @@ const validate = (req, _res, next) => {
 	const [error] = validationResult(req).errors;
 	console.log(validationResult(req).errors);
 	if (error) {
-		throw ErrorResponse.badRequest();
+		throw new BadRequest();
 	}
 	next();
 };

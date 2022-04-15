@@ -12,7 +12,7 @@ const Login = () => {
   const { register } = useAuth();
   let navigate = useNavigate();
   let location = useLocation();
-  let from = location.state?.from?.pathname || "/";
+  let from = location.state?.from?.pathname || "/login";
 
   const [isLoading, setIsLoading] = useState(false);
   if (isLoading) {

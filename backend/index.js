@@ -1,11 +1,11 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/connectDB");
-const authRouter = require("./api/routes/authRoutes");
-const generalRouter = require("./api/routes/generalRoutes");
-const errorHandler = require("./api/middleware/errorHandler");
-const cookieParser = require("cookie-parser");
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/connectDB');
+const authRouter = require('./api/routes/authRoutes');
+const mainRouter = require('./api/routes/mainRoutes');
+const errorHandler = require('./api/middleware/errorHandler');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 async function bootstrap() {
 	try {
@@ -13,10 +13,10 @@ async function bootstrap() {
 		await connectDB();
 		app.use(express.json());
 
-		app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+		app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 		app.use(cookieParser());
-		app.use("/api", generalRouter);
-		app.use("/api/auth", authRouter);
+		app.use('/api', mainRouter);
+		app.use('/api/auth', authRouter);
 
 		app.use(errorHandler);
 
@@ -25,7 +25,7 @@ async function bootstrap() {
 		});
 	} catch (err) {
 		console.log(err);
-		console.log("failed");
+		console.log('failed');
 	}
 }
 

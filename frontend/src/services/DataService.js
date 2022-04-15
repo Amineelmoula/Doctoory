@@ -2,35 +2,48 @@ import axios from "../config/http-client";
 import { authHeader } from "../utils/helpers";
 
 export class DataService {
-	static async getUser(accessToken) {
-		const { data } = await axios.get("/me", authHeader(accessToken));
-		return data?.data;
-	}
+  static async getUser(accessToken) {
+    const { data } = await axios.get("/me", authHeader(accessToken));
+    return data?.data;
+  }
 
-	async getDoctorsList(accessToken) {
-		const { data } = await axios.get("/doctors", authHeader(accessToken));
-	}
+  static async getDoctorsList(accessToken) {
+    const { data } = await axios.get("/doctors", authHeader(accessToken));
+    return data?.data;
+  }
 
-	async getAppointments(role, accessToken) {
-		const { data } = await axios.get(
-			`/${role}/appointments`,
-			authHeader(accessToken)
-		);
-	}
+  static async getAppointments(role, accessToken) {
+    const { data } = await axios.get(
+      `/${role}/appointments`,
+      authHeader(accessToken)
+    );
+    console.log(data);
+    return data?.data;
+  }
 
-	async requestAppointment(accessToken) {
-		const { data } = await axios.post(
-			"/patient/appointments",
-			{},
-			authHeader(accessToken)
-		);
-	}
+  static async requestAppointment(request, accessToken) {
+    const { data } = await axios.post(
+      "/patient/appointments",
+      request,
+      authHeader(accessToken)
+    );
+    return data?.success;
+  }
 
-	async approveAppointment(accessToken) {
-		const { data } = await axios.post(
-			"/doctor/appointments",
-			{},
-			authHeader(accessToken)
-		);
-	}
+  static async approveAppointment(id, accessToken) {
+    const { data } = await axios.post(
+      `/doctor/appointments/${id}/approve`,
+      {},
+      authHeader(accessToken)
+    );
+    return data?.success;
+  }
+  static async rejectAppointment(id, accessToken) {
+    const { data } = await axios.post(
+      `/doctor/appointments/${id}/reject`,
+      {},
+      authHeader(accessToken)
+    );
+    return data?.success;
+  }
 }

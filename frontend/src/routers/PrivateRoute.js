@@ -1,12 +1,20 @@
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import Preloader from "../components/Preloader/Preloader";
-import { useAuth } from "../store/AuthProvider";
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import Preloader from '../components/Preloader/Preloader';
+import { useAuth } from '../store/AuthProvider';
 
-function PrivateRoute({ redirectURI, forGuests, children }) {
-	const { isAuthenticated, isTokenRefreshing } = useAuth();
-	const hasPermission = forGuests ? !isAuthenticated : isAuthenticated;
-	let location = useLocation();
+function PrivateRoute({
+	redirectURI,
+	forGuests = false,
+	userRole = null,
+	children,
+}) {
+	const location = useLocation();
+	const { isAuthenticated, isTokenRefreshing, user } = useAuth();
+	let hasPermission = forGuests ? !isAuthenticated : isAuthenticated;
+	if (userRole) {
+		hasPermission = hasPermission && userRole === user.role;
+	}
 	if (isTokenRefreshing) {
 		return <Preloader />;
 	}

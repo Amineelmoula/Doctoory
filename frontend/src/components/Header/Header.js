@@ -55,11 +55,16 @@ const Header = ({ setIsLoading }) => {
                 Make Appointment
               </Link>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
-                Dashboard
-              </Link>
+              {!isTokenRefreshing &&
+                (isAuthenticated ? (
+                  <Link className="nav-link" to="/dashboard">
+                    Dashboard
+                  </Link>
+                ) : null)}
             </li>
+
             <li className="nav-item">
               <Link className="nav-link" to="/reviews">
                 Reviews
@@ -77,12 +82,20 @@ const Header = ({ setIsLoading }) => {
                 <button onClick={handleLogout}>Logout</button>
               </div>
             ) : (
-              <div className="d-flex flex-end">
-                <Link className="nav-link d-block" to="/login">
+              <div className="d-flex flex-end ">
+                <Link
+                  className="nav-link d-block"
+                  style={{ color: "#15D1C8" }}
+                  to="/login"
+                >
                   Login
                 </Link>
 
-                <Link className="nav-link d-block" to="/register">
+                <Link
+                  className="nav-link d-block "
+                  style={{ color: "#15D1C8" }}
+                  to="/register"
+                >
                   Register
                 </Link>
               </div>
